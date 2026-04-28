@@ -194,6 +194,36 @@ gap:6px;
 
 .stat svg{width:14px;height:14px;fill:var(--green)}
 
+.project-header-right{
+display:flex;
+flex-direction:column;
+align-items:flex-end;
+gap:10px;
+}
+
+.store-link{
+font-family:'Space Mono',monospace;
+font-size:13px;
+color:var(--text);
+text-decoration:none;
+padding:8px 16px;
+border:1px solid var(--border);
+border-radius:8px;
+display:inline-flex;
+align-items:center;
+gap:8px;
+transition:all 0.3s ease;
+}
+
+.store-link:hover{
+border-color:var(--accent);
+background:var(--tag-bg);
+transform:translateY(-2px);
+}
+
+.store-link svg{width:16px;height:16px;fill:var(--text-muted)}
+.store-link:hover svg{fill:var(--accent)}
+
 .project-desc{
 padding:0 32px;
 font-size:16px;
@@ -221,35 +251,37 @@ border-radius:6px;
 
 .media-grid{
 display:grid;
-grid-template-columns:repeat(2,1fr);
-gap:2px;
-padding:0 2px 2px;
+grid-template-columns:repeat(4,1fr);
+gap:4px;
+padding:4px;
 }
 
-.media-grid a,
-.media-grid .video-wrap{
+.media-grid a{
 display:block;
 overflow:hidden;
-aspect-ratio:16/9;
+border-radius:8px;
 position:relative;
 }
 
 .media-grid img{
 width:100%;
-height:100%;
-object-fit:cover;
-transition:transform 0.5s ease;
+height:auto;
 display:block;
+transition:transform 0.5s ease;
 }
 
 .media-grid a:hover img{
 transform:scale(1.05);
 }
 
+.video-wrap{
+border-radius:8px;
+overflow:hidden;
+}
+
 .video-wrap video{
 width:100%;
-height:100%;
-object-fit:cover;
+height:auto;
 display:block;
 }
 
@@ -301,13 +333,22 @@ max-height:90vh;
 border-radius:8px;
 }
 
+.video-row{
+padding:4px;
+}
+
+.video-row .video-wrap{
+max-width:300px;
+}
+
 @media(max-width:640px){
 .hero{min-height:50vh;padding:60px 20px 40px}
 .project-header{padding:24px 20px 16px}
 .project-desc{padding:0 20px}
 .tags{padding:0 20px}
 .project-footer{padding:16px 20px}
-.media-grid{grid-template-columns:1fr}
+.media-grid{grid-template-columns:repeat(2,1fr)}
+.video-row .video-wrap{max-width:50%}
 .project-stats{gap:10px}
 }
 </style>
@@ -341,6 +382,11 @@ GitHub
 <article class="project">
 <div class="project-header">
 <h2>Cat Cup Dance</h2>
+<div class="project-header-right">
+<a class="store-link" href="https://play.google.com/store/apps/details?id=com.PimpochkaGames.CatCupDance&hl=ru" target="_blank">
+<svg viewBox="0 0 24 24"><path d="M3.61 1.814L13.793 12 3.61 22.186a.996.996 0 01-.61-.92V2.734a1 1 0 01.61-.92zm.58-.41l11.17 6.45L12.1 11.1 4.19 1.404zM21.4 11.11l-3.09 1.78-3.58-3.58 3.58-3.58 3.09 1.78a1.003 1.003 0 010 1.74v-.16zM4.19 22.596l7.91-9.696 3.26 3.26-11.17 6.436z"/></svg>
+Google Play
+</a>
 <div class="project-stats">
 <span class="stat">
 <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
@@ -350,6 +396,7 @@ GitHub
 <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
 4.3
 </span>
+</div>
 </div>
 </div>
 <p class="project-desc">Музыкальная аркада с котиками в чашках. Игрок управляет котиком, прыгая по платформам в ритм музыки. Кастомизация персонажей и чашек, разнообразные уровни с нарастающей сложностью. Основной разработчик.</p>
@@ -364,18 +411,23 @@ GitHub
 <a href="images/cat-cup-dance-1.png" class="lightbox-trigger"><img src="images/cat-cup-dance-1.png" alt="Cat Cup Dance screenshot 1" loading="lazy"></a>
 <a href="images/cat-cup-dance-2.png" class="lightbox-trigger"><img src="images/cat-cup-dance-2.png" alt="Cat Cup Dance screenshot 2" loading="lazy"></a>
 <a href="images/cat-cup-dance-3.png" class="lightbox-trigger"><img src="images/cat-cup-dance-3.png" alt="Cat Cup Dance screenshot 3" loading="lazy"></a>
+</div>
+<div class="video-row">
 <div class="video-wrap">
 <video src="images/cat-cup-dance-video.mp4" controls muted preload="metadata"></video>
 </div>
-</div>
-<div class="project-footer">
-<a href="https://play.google.com/store/apps/details?id=com.PimpochkaGames.CatCupDance&hl=ru" target="_blank">Google Play →</a>
 </div>
 </article>
 
 <article class="project">
 <div class="project-header">
 <h2>Kitty Shorts Simulator</h2>
+<div class="project-header-right">
+<a class="store-link" href="https://play.google.com/store/apps/details?id=com.PimpochkaGames.KittyShortsSimulator" target="_blank">
+<svg viewBox="0 0 24 24"><path d="M3.61 1.814L13.793 12 3.61 22.186a.996.996 0 01-.61-.92V2.734a1 1 0 01.61-.92zm.58-.41l11.17 6.45L12.1 11.1 4.19 1.404zM21.4 11.11l-3.09 1.78-3.58-3.58 3.58-3.58 3.09 1.78a1.003 1.003 0 010 1.74v-.16zM4.19 22.596l7.91-9.696 3.26 3.26-11.17 6.436z"/></svg>
+Google Play
+</a>
+</div>
 </div>
 <p class="project-desc">Симулятор блогера. Игрок создаёт контент, прокачивает оборудование, покупает блогеров, получает подписчиков, лайки и комментарии. Большой проект — основной разработчик.</p>
 <div class="tags">
@@ -391,13 +443,10 @@ GitHub
 <a href="images/kitty-shorts-simulator-3.png" class="lightbox-trigger"><img src="images/kitty-shorts-simulator-3.png" alt="Kitty Shorts Simulator screenshot 3" loading="lazy"></a>
 <a href="images/kitty-shorts-simulator-4.png" class="lightbox-trigger"><img src="images/kitty-shorts-simulator-4.png" alt="Kitty Shorts Simulator screenshot 4" loading="lazy"></a>
 </div>
-<div class="media-grid" style="margin-top:2px">
-<div class="video-wrap" style="grid-column:1/-1;aspect-ratio:16/9">
-<video src="images/kitty-shorts-simulator-video.mp4" controls muted preload="metadata" style="width:100%;height:100%;object-fit:cover"></video>
+<div class="video-row">
+<div class="video-wrap">
+<video src="images/kitty-shorts-simulator-video.mp4" controls muted preload="metadata"></video>
 </div>
-</div>
-<div class="project-footer">
-<a href="https://play.google.com/store/apps/details?id=com.PimpochkaGames.KittyShortsSimulator" target="_blank">Google Play →</a>
 </div>
 </article>
 </section>
