@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Roman Sharipov — Unity Developer</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+--bg:#0a0a0f;
+--surface:#12121a;
+--surface-hover:#1a1a25;
+--border:#1e1e2e;
+--text:#e0e0e8;
+--text-muted:#8888a0;
+--accent:#6c5ce7;
+--accent-glow:rgba(108,92,231,0.3);
+--gradient-1:#6c5ce7;
+--gradient-2:#a78bfa;
+--tag-bg:rgba(108,92,231,0.12);
+--tag-text:#a78bfa;
+--green:#34d399;
+--card-radius:16px;
+}
+
+html{scroll-behavior:smooth}
+body{
+font-family:'DM Sans',sans-serif;
+background:var(--bg);
+color:var(--text);
+line-height:1.6;
+-webkit-font-smoothing:antialiased;
+}
+
+.noise{
+position:fixed;
+top:0;left:0;width:100%;height:100%;
+pointer-events:none;
+opacity:0.03;
+z-index:9999;
+background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.hero{
+min-height:60vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;
+padding:80px 24px 60px;
+position:relative;
+overflow:hidden;
+}
+
+.hero::before{
+content:'';
+position:absolute;
+width:600px;height:600px;
+border-radius:50%;
+background:radial-gradient(circle,var(--accent-glow) 0%,transparent 70%);
+top:-200px;left:50%;transform:translateX(-50%);
+pointer-events:none;
+animation:pulse 6s ease-in-out infinite;
+}
+
+@keyframes pulse{
+0%,100%{opacity:0.4;transform:translateX(-50%) scale(1)}
+50%{opacity:0.7;transform:translateX(-50%) scale(1.1)}
+}
+
+.hero-label{
+font-family:'Space Mono',monospace;
+font-size:13px;
+letter-spacing:3px;
+text-transform:uppercase;
+color:var(--accent);
+margin-bottom:20px;
+position:relative;
+}
+
+.hero h1{
+font-family:'Space Mono',monospace;
+font-size:clamp(32px,6vw,56px);
+font-weight:700;
+line-height:1.15;
+margin-bottom:16px;
+background:linear-gradient(135deg,var(--gradient-1),var(--gradient-2));
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+background-clip:text;
+position:relative;
+}
+
+.hero p{
+font-size:18px;
+color:var(--text-muted);
+max-width:520px;
+margin-bottom:32px;
+position:relative;
+}
+
+.contacts{
+display:flex;
+gap:16px;
+flex-wrap:wrap;
+justify-content:center;
+position:relative;
+}
+
+.contacts a{
+font-family:'Space Mono',monospace;
+font-size:14px;
+color:var(--text);
+text-decoration:none;
+padding:10px 20px;
+border:1px solid var(--border);
+border-radius:8px;
+transition:all 0.3s ease;
+display:flex;
+align-items:center;
+gap:8px;
+}
+
+.contacts a:hover{
+border-color:var(--accent);
+background:var(--tag-bg);
+transform:translateY(-2px);
+}
+
+.contacts a svg{width:16px;height:16px;fill:var(--text-muted)}
+.contacts a:hover svg{fill:var(--accent)}
+
+.section-title{
+font-family:'Space Mono',monospace;
+font-size:13px;
+letter-spacing:3px;
+text-transform:uppercase;
+color:var(--accent);
+text-align:center;
+margin-bottom:48px;
+}
+
+.projects{
+max-width:1000px;
+margin:0 auto;
+padding:0 24px 80px;
+display:flex;
+flex-direction:column;
+gap:64px;
+}
+
+.project{
+background:var(--surface);
+border:1px solid var(--border);
+border-radius:var(--card-radius);
+overflow:hidden;
+transition:border-color 0.3s ease;
+}
+
+.project:hover{
+border-color:rgba(108,92,231,0.3);
+}
+
+.project-header{
+padding:32px 32px 24px;
+display:flex;
+justify-content:space-between;
+align-items:flex-start;
+flex-wrap:wrap;
+gap:16px;
+}
+
+.project-header h2{
+font-family:'Space Mono',monospace;
+font-size:24px;
+font-weight:700;
+}
+
+.project-stats{
+display:flex;
+gap:16px;
+}
+
+.stat{
+font-family:'Space Mono',monospace;
+font-size:13px;
+color:var(--green);
+display:flex;
+align-items:center;
+gap:6px;
+}
+
+.stat svg{width:14px;height:14px;fill:var(--green)}
+
+.project-desc{
+padding:0 32px;
+font-size:16px;
+color:var(--text-muted);
+max-width:700px;
+margin-bottom:20px;
+}
+
+.tags{
+display:flex;
+flex-wrap:wrap;
+gap:8px;
+padding:0 32px;
+margin-bottom:24px;
+}
+
+.tag{
+font-family:'Space Mono',monospace;
+font-size:12px;
+color:var(--tag-text);
+background:var(--tag-bg);
+padding:4px 12px;
+border-radius:6px;
+}
+
+.media-grid{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:2px;
+padding:0 2px 2px;
+}
+
+.media-grid a,
+.media-grid .video-wrap{
+display:block;
+overflow:hidden;
+aspect-ratio:16/9;
+position:relative;
+}
+
+.media-grid img{
+width:100%;
+height:100%;
+object-fit:cover;
+transition:transform 0.5s ease;
+display:block;
+}
+
+.media-grid a:hover img{
+transform:scale(1.05);
+}
+
+.video-wrap video{
+width:100%;
+height:100%;
+object-fit:cover;
+display:block;
+}
+
+.project-footer{
+padding:20px 32px;
+border-top:1px solid var(--border);
+}
+
+.project-footer a{
+font-family:'Space Mono',monospace;
+font-size:13px;
+color:var(--accent);
+text-decoration:none;
+display:inline-flex;
+align-items:center;
+gap:8px;
+transition:gap 0.3s ease;
+}
+
+.project-footer a:hover{
+gap:12px;
+}
+
+.footer{
+text-align:center;
+padding:40px 24px;
+font-size:14px;
+color:var(--text-muted);
+border-top:1px solid var(--border);
+font-family:'Space Mono',monospace;
+}
+
+.lightbox{
+position:fixed;
+top:0;left:0;width:100%;height:100%;
+background:rgba(0,0,0,0.92);
+z-index:10000;
+display:none;
+justify-content:center;
+align-items:center;
+cursor:zoom-out;
+}
+
+.lightbox.active{display:flex}
+
+.lightbox img{
+max-width:90vw;
+max-height:90vh;
+border-radius:8px;
+}
+
+@media(max-width:640px){
+.hero{min-height:50vh;padding:60px 20px 40px}
+.project-header{padding:24px 20px 16px}
+.project-desc{padding:0 20px}
+.tags{padding:0 20px}
+.project-footer{padding:16px 20px}
+.media-grid{grid-template-columns:1fr}
+.project-stats{gap:10px}
+}
+</style>
+</head>
+<body>
+<div class="noise"></div>
+
+<section class="hero">
+<div class="hero-label">Unity Developer</div>
+<h1>Roman Sharipov</h1>
+<p>4+ года коммерческой разработки мобильных игр на Unity. C#, VContainer, UniTask, UniRx, Addressables.</p>
+<div class="contacts">
+<a href="mailto:roman.sharipov.1990@gmail.com">
+<svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+Email
+</a>
+<a href="https://t.me/RomanSharipov22" target="_blank">
+<svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.2-.08-.06-.19-.04-.27-.02-.12.03-1.99 1.27-5.62 3.72-.53.36-1.01.54-1.44.53-.47-.01-1.38-.27-2.06-.49-.83-.27-1.49-.42-1.43-.88.03-.24.37-.49 1.02-.75 3.99-1.74 6.65-2.89 7.99-3.44 3.81-1.58 4.6-1.86 5.12-1.87.11 0 .37.03.53.17.14.12.18.28.2.45-.01.06.01.24 0 .37z"/></svg>
+Telegram
+</a>
+<a href="https://github.com/RomanSharipov" target="_blank">
+<svg viewBox="0 0 24 24"><path d="M12 2A10 10 0 002 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0012 2z"/></svg>
+GitHub
+</a>
+</div>
+</section>
+
+<section class="projects">
+<div class="section-title">Проекты</div>
+
+<article class="project">
+<div class="project-header">
+<h2>Cat Cup Dance</h2>
+<div class="project-stats">
+<span class="stat">
+<svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+1M+ скачиваний
+</span>
+<span class="stat">
+<svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+4.3
+</span>
+</div>
+</div>
+<p class="project-desc">Музыкальная аркада с котиками в чашках. Игрок управляет котиком, прыгая по платформам в ритм музыки. Кастомизация персонажей и чашек, разнообразные уровни с нарастающей сложностью. Основной разработчик.</p>
+<div class="tags">
+<span class="tag">C#</span>
+<span class="tag">VContainer</span>
+<span class="tag">Addressables</span>
+<span class="tag">UniTask</span>
+<span class="tag">UniRx</span>
+</div>
+<div class="media-grid">
+<a href="images/cat-cup-dance-1.png" class="lightbox-trigger"><img src="images/cat-cup-dance-1.png" alt="Cat Cup Dance screenshot 1" loading="lazy"></a>
+<a href="images/cat-cup-dance-2.png" class="lightbox-trigger"><img src="images/cat-cup-dance-2.png" alt="Cat Cup Dance screenshot 2" loading="lazy"></a>
+<a href="images/cat-cup-dance-3.png" class="lightbox-trigger"><img src="images/cat-cup-dance-3.png" alt="Cat Cup Dance screenshot 3" loading="lazy"></a>
+<div class="video-wrap">
+<video src="images/cat-cup-dance-video.mp4" controls muted preload="metadata"></video>
+</div>
+</div>
+<div class="project-footer">
+<a href="https://play.google.com/store/apps/details?id=com.PimpochkaGames.CatCupDance&hl=ru" target="_blank">Google Play →</a>
+</div>
+</article>
+
+<article class="project">
+<div class="project-header">
+<h2>Kitty Shorts Simulator</h2>
+</div>
+<p class="project-desc">Симулятор блогера. Игрок создаёт контент, прокачивает оборудование, покупает блогеров, получает подписчиков, лайки и комментарии. Большой проект — основной разработчик.</p>
+<div class="tags">
+<span class="tag">C#</span>
+<span class="tag">VContainer</span>
+<span class="tag">Addressables</span>
+<span class="tag">UniTask</span>
+<span class="tag">UniRx</span>
+</div>
+<div class="media-grid">
+<a href="images/kitty-shorts-simulator-1.png" class="lightbox-trigger"><img src="images/kitty-shorts-simulator-1.png" alt="Kitty Shorts Simulator screenshot 1" loading="lazy"></a>
+<a href="images/kitty-shorts-simulator-2.png" class="lightbox-trigger"><img src="images/kitty-shorts-simulator-2.png" alt="Kitty Shorts Simulator screenshot 2" loading="lazy"></a>
+<a href="images/kitty-shorts-simulator-3.png" class="lightbox-trigger"><img src="images/kitty-shorts-simulator-3.png" alt="Kitty Shorts Simulator screenshot 3" loading="lazy"></a>
+<a href="images/kitty-shorts-simulator-4.png" class="lightbox-trigger"><img src="images/kitty-shorts-simulator-4.png" alt="Kitty Shorts Simulator screenshot 4" loading="lazy"></a>
+</div>
+<div class="media-grid" style="margin-top:2px">
+<div class="video-wrap" style="grid-column:1/-1;aspect-ratio:16/9">
+<video src="images/kitty-shorts-simulator-video.mp4" controls muted preload="metadata" style="width:100%;height:100%;object-fit:cover"></video>
+</div>
+</div>
+<div class="project-footer">
+<a href="https://play.google.com/store/apps/details?id=com.PimpochkaGames.KittyShortsSimulator" target="_blank">Google Play →</a>
+</div>
+</article>
+</section>
+
+<footer class="footer">
+© 2026 Roman Sharipov
+</footer>
+
+<div class="lightbox" id="lightbox">
+<img src="" alt="Preview">
+</div>
+
+<script>
+const lightbox = document.getElementById('lightbox');
+const lightboxImg = lightbox.querySelector('img');
+
+document.querySelectorAll('.lightbox-trigger').forEach(a => {
+a.addEventListener('click', e => {
+e.preventDefault();
+lightboxImg.src = a.href;
+lightbox.classList.add('active');
+});
+});
+
+lightbox.addEventListener('click', () => {
+lightbox.classList.remove('active');
+lightboxImg.src = '';
+});
+</script>
+</body>
+</html>
